@@ -1,0 +1,254 @@
+.ldb-container-blog-user {
+	display: flex;
+	width: 100%;
+	gap: 10px;
+
+	.ldb-card-blog {
+		width: 80%;
+		height: 65px;
+		display: flex;
+		align-items: center;
+		margin-bottom: .5rem;
+	
+		.img-card-blog {
+			width: 200px;
+			height: 65px;
+	
+			img {
+				width: 100%;
+				height: 65px;
+				border-radius: 15px 5px 5px 15px;
+				object-fit: cover;
+			}
+		}
+		
+		.card-blog-info {
+			margin: .5rem;
+			width: 100%;
+			height: 65px;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row-reverse;
+			align-items: center;
+			gap: 10px;
+
+			.card-plateforme {
+				width: 60px;
+				height: 65px;
+				display: flex;
+				justify-content: center;
+				padding-left: .5rem;
+				border-left: solid 2px var(--couleur-orange);
+		
+				img {
+					object-fit: contain;
+				}
+			}
+
+			.card-plateforme2 {
+				width: 120px;
+				gap: 10px;
+				height: 65px;
+				display: flex;
+				justify-content: center;
+				padding-left: .5rem;
+				border-left: solid 2px var(--couleur-orange);
+		
+				img {
+					width: 50px;
+					height: 65px;
+					object-fit: contain;
+				}
+			}
+	
+			.ldb-container-information {
+				display: flex;
+				flex-direction: column;
+				height: 90%;
+				flex: 1;
+
+				.ldb-container-titre {
+					display: flex;
+					justify-content: flex-start;
+					align-items: flex-start;
+					gap: 5px;
+
+					a {
+						font-size: .85rem;
+						line-height: 1rem;
+						font-weight: 700;
+		
+						&:hover {
+							color: var(--couleur-jaune-hover);
+						}
+					}
+				}
+	
+				.ldb-container-publier-commentaire {
+					width: 100%;
+					height: 65px;
+					padding: .2rem 0;
+					display: flex;
+					align-items: end;
+					justify-content: space-between;
+	
+					p {
+						font-size: .6rem;
+					}
+				}
+			}
+		}
+	}
+
+	// Liste des utilisateurs
+	.ldb-container-liste-user {
+		width: 20%;
+		display: flex;
+		gap: 5px;
+
+		.card-liste-user {
+			width: 100%;
+			height: 65px;
+			gap: 5px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		
+			figcaption {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				height: 65px;
+				width: 120px;
+				line-height: 1rem;
+			}
+			
+			.a-img-card-user {
+				margin-left: .3rem;
+				margin-right: .3rem;
+				width: 50px;
+				height: 50px;
+				
+				img {
+					object-fit: cover;
+				}
+			}
+			
+			a,
+			p {
+				font-size: .8rem;
+			}
+		
+			a:hover {
+				color: var(--couleur-jaune-hover);
+			}
+		}
+	}		
+}
+
+
+@media (max-width: 750px) and (orientation: portrait) {
+	.ldb-container-blog-user {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		gap: 0;
+		margin-bottom: 1rem; // comme le JS
+
+		.ldb-card-blog {
+			width: 100%;
+			height: 220px;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			border-radius: 15px 15px 5px 5px;
+
+			.img-card-blog {
+				width: 100%;
+				height: 140px;
+
+				img {
+					height: 140px;
+					border-radius: 15px 15px 5px 5px;
+					object-fit: cover;
+				}
+			}
+
+			.card-blog-info {
+				margin: 0;
+				padding: 0.3rem;
+				width: 100%;
+				height: 80px;
+				display: flex;
+				flex-direction: row-reverse;
+				align-items: flex-start;
+				gap: 5px;
+
+				.ldb-container-information {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					width: 100%;
+					height: 100%;
+
+					.ldb-container-titre {
+						display: flex;
+						align-items: flex-start;
+						gap: 5px;
+						line-height: 1rem;
+
+						img {
+							width: 19.2px;
+							height: 19.2px;
+						}
+
+						a {
+							font-size: 1rem;
+							font-weight: 700;
+							text-decoration: none;
+
+							&:hover {
+								color: var(--couleur-jaune-hover);
+							}
+						}
+					}
+
+					.ldb-container-publier-commentaire {
+						display: flex;
+						justify-content: space-between;
+
+						p {
+							font-size: 0.7rem;
+						}
+					}
+				}
+			}
+		}
+
+		.ldb-container-liste-user {
+			width: 100%;
+			display: flex;
+			gap: 5px;
+		
+			.card-liste-user {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+				border-radius: 5px 5px 15px 15px;
+				height: 60px;
+				width: 100%;
+		
+				.a-img-card-user {
+					width: 50px;
+					height: 50px;
+				}
+		
+				a {
+					font-size: .9rem;
+				}
+			}
+		}
+	}
+
+}

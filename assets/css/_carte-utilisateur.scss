@@ -1,0 +1,84 @@
+.carte-utilisateur-container, form {
+	.cu-gras, .pe-gras {
+		font-weight: 600;
+		margin: 0.5rem 0.5rem 0.5rem 0;
+	}
+	.cu-container-utilisateur {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+
+		.btn-remove {
+				width: 25px;
+				color: red;
+				font-size: 2rem;
+				height: 25px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding-top: .1rem;
+			}
+
+		.box-card-utilisateur {
+			display: flex;
+			width: 240px;
+			height: 60px;
+			background: var(--background-bleu-clair2);
+			border-radius: 5px;
+			line-height: .8rem;
+
+			img {
+				border-radius: 5px;
+				object-fit: cover;
+			}
+
+			figcaption {
+				padding: .5rem;
+
+				a {
+					font-size: 1rem;
+					font-weight: 500;
+
+					&:hover {
+						color: var(--couleur-texte-jaune);
+					}
+				}
+
+				p {
+					font-size: 1rem;
+					font-weight: 500;
+					text-decoration: none;
+					margin: 0 !important;
+				}
+			}
+		}
+	}
+}
+
+
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+	.carte-utilisateur-container {
+		.cu-container-utilisateur {
+			.box-card-utilisateur {
+				height: 60px;
+	
+				.cu-img-profil {
+					height: 110px;
+				}
+	
+				figcaption {
+					height: 115px;
+	
+					a {
+						font-size: 1.2rem;
+					}
+
+					p {
+						font-size: 1.2rem;
+					}
+				}
+			}
+		}
+	}
+}

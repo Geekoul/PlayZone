@@ -1,0 +1,28 @@
+#utilisateur-informations {
+	display: flex;
+	width: 95%;
+	max-width: 1400px;
+	gap: 20px;
+	margin: 1.5rem auto;
+	.ldb-container-blog-user {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+@media screen and (max-width:1080px) {
+	#utilisateur-informations {
+		width: 95%;
+	}
+}
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+	#utilisateur-informations {
+		width: 95%;
+		flex-direction: column;
+
+		.pu-container-liste-blog {
+			width: 100%;
+		}
+	}
+}

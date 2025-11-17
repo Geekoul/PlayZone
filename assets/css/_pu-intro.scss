@@ -1,0 +1,80 @@
+#pu-intro {
+	width: 85%;
+	max-width: 1400px;
+	margin: 0 auto;
+	margin-top: -5rem;
+	padding-bottom: 1rem;
+	display: flex;
+	border-bottom: solid 2px var(--couleur-orange);
+
+	.pu-user {
+		display: flex;
+		flex-direction: row;
+		align-items: end;
+		gap: 15px;
+		width: 50%;
+
+		.pu-logo-user {
+			object-fit: cover;
+		}
+
+		h1 {
+			font-size: 2rem;
+		}
+
+		figcaption {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	.pu-signaler {
+		width: 50%;
+		display: flex;
+		justify-content: end;
+		align-items: end;
+		gap: 10px;
+	}
+}
+
+@media screen and (max-width:1080px) {
+	#pu-intro {
+		width: 95%;
+	}
+}
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+
+	#pu-intro {
+		padding-top: 10rem;
+		padding-bottom: 1rem;
+		flex-direction: column;
+		border-bottom: solid 2px var(--couleur-orange);
+	
+		.pu-user {
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+	
+			figcaption {
+				align-items: center;
+			}
+		}
+	
+		.pu-signaler {
+			width: 100%;
+			flex-direction: column;
+			align-items: center;
+		}
+	}
+}
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+  #pu-intro {
+		.pu-user {
+			.pu-logo-user {
+				margin-top: -10rem;
+			}
+		}
+	}
+}

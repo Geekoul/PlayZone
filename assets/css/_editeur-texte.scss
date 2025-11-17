@@ -1,0 +1,86 @@
+.editor-container {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  margin: .5rem auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+	font-size: .9rem;
+
+  .toolbar {
+    background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+
+    button {
+      width: 40px;
+			height: 40px;
+      background: white;
+      border: 2px solid #bbb;
+      border-radius: 4px;
+      padding: 4px 0;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1;
+      color: #333;
+      &:hover {
+        background: #d8d8d8;
+      }
+      &.active {
+        background: #d8d8d8;
+        border-color: #999;
+      }
+    }
+
+    #create-boldBtn b, #create-italicBtn i, #create-underlineBtn u, #create-strikeBtn s, #create-titreh3 b {
+			color: #000;
+		}
+
+    #edit-boldBtn b, #edit-italicBtn i, #edit-underlineBtn u, #edit-strikeBtn s, #edit-titreh3 b {
+			color: #000;
+		}
+
+    #boldBtn b, #italicBtn i, #underlineBtn u, #strikeBtn s, #titreh2 b {
+			color: #000;
+		}
+  }
+
+  #editor-create, #editor-edit, #editor {
+    min-height: 300px;
+    padding: 12px;
+    outline: none;
+    font-size: .9rem;
+    line-height: 1.5;
+    &:focus {
+      outline: 2px solid #5a9;
+    }
+
+    .editeurh2, .editeurh3 {
+      font-size: 1.3rem;
+      text-align: left;
+      border: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    b, i, u, strike, a {
+     font-size: .9rem;
+    }
+
+    a {
+      color: var(--couleur-jaune);
+    }
+
+    img {
+      display: block !important;
+			max-width: 50% !important;
+			height: auto !important;
+			margin: 8px 0 !important;
+    }
+  }
+}

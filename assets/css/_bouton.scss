@@ -1,0 +1,88 @@
+.bouton-suivre {
+	background: var(--couleur-orange);
+	border-radius: 10px;
+	padding: 0 .5rem;
+	font-size: .9rem;
+	font-weight: 600;
+	width: 100%;
+	max-width: 200px;
+	height: 45px;
+	line-height: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	cursor: pointer;
+
+	&:hover {
+		background: var(--couleur-orange-hover);
+	}
+}
+
+.bouton-abonnements {
+	background: var(--background-bleu-clair2);
+	border-radius: 10px;
+	padding: 0 .5rem;
+	font-size: .9rem;
+	font-weight: 600;
+	width: 100%;
+	max-width: 200px;
+	height: 45px;
+	line-height: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	&:hover {
+		background: var(--background-bleu-clair-hover);
+	}
+}
+
+.bouton-signaler {
+	background: var(--couleur-rouge);
+	border-radius: 10px;
+	padding: 0 .5rem;
+	font-size: .9rem;
+	font-weight: 600;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+
+	&:hover {
+		background: var(--couleur-rouge-hover);
+	}
+}
+
+.bouton-recherche {
+	padding: .2rem 1vw;
+	height: 100px;
+	border-radius: 50px;
+	background: var(--couleur-orange);
+	border: 2px solid var(--couleur-jaune);
+	text-decoration: none;
+	text-align: center;
+	font-size: .8rem;
+	font-weight: 600;
+}
+
+.bouton-voir-plus {
+	background: var(--couleur-orange);
+	border: 2px solid var(--couleur-orange);
+	border-radius: 10px;
+	padding: 0 .5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	width: 350px;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+
+	&:hover {
+		background: var(--couleur-orange-hover);
+	}
+}

@@ -1,0 +1,51 @@
+.box-bg {
+	padding: .5rem;
+	gap: 15px;
+	border-radius: 15px;
+	background: var(--background-bleu-fonce);
+}
+
+
+.box-bg-formulaire {
+	padding: .5rem 1rem;
+	gap: 15px;
+	border-radius: 15px;
+	background: var(--background-bleu-fonce);
+}
+
+.box-card {
+	border-radius: 10px;
+	margin-bottom: .5rem;
+	padding: .5rem 1rem;
+	background: var(--background-bleu-clair);
+}
+
+.box-card-2 {
+	background: var(--background-bleu-clair2);
+	border-radius: 10px;
+	padding: .5rem;
+}
+
+.box-card-commentaire {
+	border-radius: 5px;
+	margin-bottom: .5rem;
+	background: var(--background-bleu-clair);
+}
+
+.box-liste-blog {
+	background: var(--background-bleu-clair);
+	border-radius: 15px;
+}
+
+.box-liste-blog-min {
+	background: var(--background-bleu-clair2);
+	border-radius: 15px;
+}
+
+.box-rs {
+	padding: 0 .5rem;
+	padding-bottom: .3rem;
+	gap: 15px;
+	border-radius: 15px;
+	background: var(--background-bleu-fonce);
+}

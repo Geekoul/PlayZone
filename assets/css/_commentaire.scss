@@ -1,0 +1,272 @@
+#section-commentaires {
+	width: 60%;
+	max-width: 1200px;
+	margin-top: 1rem;
+	margin-left: 15vw;
+
+	.commentaire-input-box {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		border-bottom: solid 2px var(--couleur-orange);
+		margin-bottom: 1.5rem;
+
+			input {
+			width: 100%;
+			padding: .3em;
+			color: var(--couleur-texte-noir);
+		}
+
+		.commentaire-bouton-envoyer {
+			align-self: flex-end;
+			margin: .5rem 0;
+			width: 300px;
+			padding: .5rem;
+			border-radius: 5px;
+			line-height: 1rem;
+			font-size: 1.1rem;
+			font-weight: 500;
+			background: var(--couleur-orange);
+			border: 2px solid var(--couleur-orange);
+			color: white;
+
+			&:hover {
+				background: var(--couleur-orange-hover);
+			}
+		}
+
+		.commentaire-bouton-creer-compte {
+			align-self: flex-end;
+			text-decoration: none;
+			text-align: center;
+			margin: .5rem 0;
+			width: 300px;
+			padding: .5rem;
+			border-radius: 5px;
+			line-height: 1rem;
+			font-size: 1.1rem;
+			font-weight: 500;
+			background: grey;
+			color: white;
+		}
+
+		&:hover {
+				background: none;
+			}
+	}
+
+	.commentaire {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: .5rem;
+
+		.commentaire-profil-edition {
+			display: flex;
+			width: 100%;
+
+			p {
+				font-size: .6rem;
+			}
+
+			.commentaire-logo-utilisateur {
+				border-radius: 5px;
+				object-fit: cover;
+			}
+
+			.commentaire-container-pseudo-edition {
+				width: 100%;
+				height: 50px;
+				display: flex;
+
+				.commentaire-pseudo {
+					width: 50%;
+					padding: .5rem;
+					line-height: 1rem;
+
+					a {
+						text-decoration: none;
+						font-size: 1.3rem;
+						font-weight: 600;
+
+						&:hover {
+							color: var(--couleur-texte-jaune);
+						}
+					}
+
+				}
+
+				.commentaire-actions {
+					display: flex;
+					justify-content: end;
+					align-items: flex-start;
+					width: 50%;
+					gap: 10px;
+					margin-top: .1rem;
+					margin-right: .5rem;
+
+					form {
+						color: var(--couleur-jaune);
+						margin-top: -.43rem;
+					}
+
+					.commentaire-supprimer {
+						color: var(--couleur-jaune);
+						text-decoration: underline;
+						cursor: pointer;
+						font-weight: 600;
+						font-size: .8rem;
+					}
+
+					.commentaire-signaler {
+						color: var(--couleur-texte-rouge);
+						text-decoration: underline;
+						cursor: pointer;
+						font-weight: 600;
+						font-size: .8rem;
+					}
+				}
+			}
+		}
+
+
+		.commentaire-texte {
+			margin-top: -.5rem;
+			padding-right: .5rem;
+			line-height: 1rem;
+			margin-left: 110px;
+
+			p {
+				font-size: .8rem;
+				margin-top: -50px;
+			}
+		}
+
+		.commentaire-date {
+			display: flex;
+			justify-content: end;
+			padding: 0 .5rem;
+			padding-top: .5rem;
+
+			p {
+				font-size: .6rem;
+				font-weight: 500;
+			}
+		}
+
+
+		.commentaire-role {
+			border-top: solid 2px var(--couleur-orange);
+			padding: .3rem;
+		}
+	}
+}
+
+.commentaires-margin-auto {
+	margin: 0 auto;
+}
+
+.commentaires-margin-15vw {
+	margin-left: 15vw;
+}
+
+
+@media screen and (max-width:1080px) {
+	#section-commentaires {
+		width: 95%;
+		padding: .5rem;
+		margin-left: 0;
+	}
+
+	.commentaires-margin-15vw {
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+	#section-commentaires {
+		.commentaire {
+			.commentaire-profil-edition {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+
+				p {
+					font-size: .8rem;
+				}
+
+				.commentaire-logo-utilisateur {
+					width: 150px;
+					height: 150px;
+					margin-top: .5rem;
+					border-radius: 5px;
+					object-fit: cover;
+				}
+
+				.commentaire-container-pseudo-edition {
+					width: 100%;
+					height: auto;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+
+					.commentaire-pseudo {
+						width: 100%;
+						height: auto;
+						padding: 1rem;
+						line-height: 1rem;
+						text-align: center;
+
+						a {
+							text-decoration: none;
+							font-size: 1.5rem;
+							font-weight: 600;
+
+							&:hover {
+								color: var(--couleur-texte-jaune);
+							}
+						}
+
+					}
+
+					.commentaire-actions {
+						justify-content: center;
+						width: 100%;
+						height: auto;
+						padding: 0 .5rem;
+					}
+				}
+			}
+				
+				.commentaire-texte {
+					margin-top: 3rem;
+					margin-left: 0;
+					padding: .5rem;
+					line-height: 1.3rem;
+
+					p {
+						font-size: .8rem;
+					}
+				}
+
+				.commentaire-date {
+					display: flex;
+					justify-content: end;
+					padding: 0 .5rem;
+					padding-top: .5rem;
+
+					p {
+						font-size: .6rem;
+						font-weight: 500;
+					}
+				}
+			
+
+			.commentaire-role {
+				border-top: solid 1px var(--couleur-orange);
+				padding: .2rem .5rem;
+			}
+		}
+	}
+}

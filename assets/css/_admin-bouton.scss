@@ -1,0 +1,36 @@
+#admin-bouton {
+	width: 80%;
+	margin: 0 auto;
+
+	.admin-bouton-utilisateur {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 10px;
+
+		.bouton-formulaire {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			width: 300px;
+			padding: .5rem;
+			border-radius: 10px;
+			line-height: 1rem;
+			background: var(--couleur-orange);
+			border: 2px solid var(--couleur-orange);
+			user-select: none;
+
+			&:hover {
+				background: var(--couleur-orange-hover);
+				cursor: pointer;
+			}
+
+			a {
+				text-decoration: none;
+				font-size: 1rem;
+				font-weight: 500;
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+#pu-description {
+	width: 85%;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding-top: .5rem;
+	display: flex;
+
+	.pu-description {
+		width: 50%;
+	}
+}
+
+@media screen and (max-width:1080px) {
+	#pu-description {
+		width: 95%;
+	}
+}
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+	#pu-description {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+	
+		.pu-description {
+			width: 100%;
+		}
+	}
+}

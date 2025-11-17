@@ -1,0 +1,22 @@
+.voir-plus {
+	display: flex;
+	justify-content: end;
+	margin-right: 1rem;
+
+	a {
+		text-decoration: none;
+
+		&:hover {
+			color: var(--couleur-jaune-hover);
+			text-decoration: underline;
+		}
+	}
+}
+
+#container-bouton-voir-plus {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 2rem;
+}
+

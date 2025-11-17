@@ -1,0 +1,41 @@
+# Désactive les correspondances bizarres d'Apache
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /
+
+# 1) Laisser passer les fichiers/dossiers réels (assets, images, etc.)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 2) Page d'accueil : /  -> index.php?page=accueil
+RewriteRule ^$ index.php?page=accueil [L,QSA]
+
+# 3) Routes jolies :
+#    /page
+RewriteRule ^([a-z0-9\-]+)/?$ index.php?page=$1 [L,QSA]
+
+#    /page/step
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/?$ index.php?page=$1&step=$2 [L,QSA]
+
+#    /page/id (numérique)
+RewriteRule ^([a-z0-9\-]+)/([0-9]+)/?$ index.php?page=$1&id=$2 [L,QSA]
+
+#    /page/step/id
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/([0-9]+)/?$ index.php?page=$1&step=$2&id=$3 [L,QSA]
+
+# --- Spécifiques d'abord ---
+RewriteRule ^article/([A-Za-z0-9\-]+)$ index.php?page=article&slug=$1 [L,QSA]
+RewriteRule ^blog/([A-Za-z0-9\-]+)$    index.php?page=blog&slug=$1    [L,QSA]
+
+# --- Puis les génériques ---
+RewriteRule ^([a-z0-9\-]+)/?$                             index.php?page=$1 [L,QSA]
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/?$               index.php?page=$1&step=$2 [L,QSA]
+RewriteRule ^([a-z0-9\-]+)/([0-9]+)/?$                    index.php?page=$1&id=$2 [L,QSA]
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/([0-9]+)/?$      index.php?page=$1&step=$2&id=$3 [L,QSA]
+
+#    /page/profil/pseudo
+RewriteRule ^profil/([A-Za-z0-9\-_]+)$ index.php?page=profilutilisateur&pseudonyme=$1 [L,QSA]
+
+

@@ -1,0 +1,277 @@
+#en-tete {
+	position: fixed;
+	z-index: 9999;
+
+	& > a img {
+		position: absolute;
+		z-index: 9998;
+		left: -2rem;
+		top: -2.5rem;
+		margin-top: 0.7vw;
+		animation: logorotate 70s linear infinite;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		gap: 20px;;
+		padding-left: 10rem;
+		padding-right: 1rem;
+		position: fixed;
+		z-index: 9997;
+		height: 4rem;
+		background: var(--background-noir-transparent);
+		border-radius: 0 50px 50px 0;
+
+		a {
+			text-decoration: none;
+			text-align: center;
+			font-size: 15px;
+			font-weight: 700;
+			color: white;
+
+			&:hover {
+				color: var(--couleur-jaune);
+			}
+		}
+
+		input {
+			border-radius: 15px;
+			height: 4vh;
+			width: 16vw;
+			color: black;
+			padding: .5rem;
+			font-size: .9rem;
+		}
+
+		.nav-connexion {
+			display: flex;
+			gap: 10px;
+
+			img {
+				width: 15px;
+				margin-bottom: .2rem;
+			}
+		}
+
+		.nav-connecte {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			
+			.nav-img-profil {
+				img {
+					border-radius: 10px;
+					object-fit: cover;	
+				}		
+			}
+
+			.nav-profil {
+				display: none;
+			}
+
+			.nav-img-equipe {
+				img {
+					border-radius: 10px;
+					object-fit: cover;	
+				}		
+			}
+
+			.nav-equipe {
+				display: none;
+			}
+			
+		}
+	}
+}
+
+@keyframes logorotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* ========= MENU BURGER MOBILE PORTRAIT ========= */
+
+.menu-burger {
+	display: none;
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	z-index: 10001;
+	width: 30px;
+	height: 30px;
+	background: none;
+	border: none;
+	cursor: pointer;
+
+	span {
+		display: block;
+		width: 100%;
+		height: 3px;
+		background: white;
+		margin: 6px 0;
+		border-radius: 2px;
+		transition: 0.4s ease;
+	}
+
+	&.open span:nth-child(1) {
+		transform: translateY(9px) rotate(45deg);
+	}
+	&.open span:nth-child(2) {
+		opacity: 0;
+	}
+	&.open span:nth-child(3) {
+		transform: translateY(-9px) rotate(-45deg);
+	}
+}
+
+@media screen and (max-width: 1080px) {
+	#en-tete {
+		& > a img {
+			left: -1.5rem;
+			top: -1.5rem;
+			width: 150px;
+			height: 150px;
+		}
+		nav {
+			padding-left: 7rem;
+			input {
+				display: none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 750px) and (orientation: portrait) {
+	#en-tete {
+		& > a img {
+			left: -1rem;
+			top: -1.5rem;
+			width: 120px;
+			height: 120px;
+		}
+	}
+	
+  .menu-burger {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10001;
+
+    span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: white;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: 0.4s ease;
+    }
+
+    &.open span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    &.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    &.open span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+  }
+
+  #en-tete {
+    nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: fixed;
+      top: 0;
+			bottom: unset;
+      left: 0;
+      width: 100vw;
+      height: 70vh;
+      padding: 2rem 1rem;
+			line-height: 1.5rem;
+      background: #2b2d42;
+      z-index: 10000;
+      animation: slideDown 0.4s ease forwards;
+      border-radius: 0 0 30px 30px;
+      text-align: center;
+
+      input {
+        display: block;
+        width: 80%;
+        height: 2rem;
+        padding: 1rem .5rem;
+        border: none;
+        margin-top: 1rem;
+				margin-bottom: 1rem;
+      }
+
+      a {
+        font-size: 1.2rem;
+        margin: 0;
+      }
+
+      .nav-separation {
+        display: none;
+      }
+
+			.nav-connexion {
+				margin-top: 1rem;
+			}
+
+			.nav-connecte {
+				display: flex;
+				flex-direction: column;
+				line-height: 1.5rem;
+				margin-top: 1rem;
+
+				.nav-img-profil {
+					display: none;	
+				}
+
+				.nav-profil {
+					display: block;
+				}
+
+				.nav-img-equipe {
+					display: none;		
+				}
+
+				.nav-equipe {
+					display: block;
+				}
+			}
+    }
+
+    nav.open {
+      display: flex;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+

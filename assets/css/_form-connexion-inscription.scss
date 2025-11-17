@@ -1,0 +1,59 @@
+.connexion-inscirption-formulaire {
+	width: 35%;
+	max-width: 680px;
+	margin: 0 auto;
+	margin-top: 1rem;
+
+	form {
+		display: flex;
+		flex-direction: column;
+
+		.c-label-1 {
+			margin: 0;
+		}
+
+		label {
+			margin-top: 1rem;
+		}
+
+		input {
+			color: black;
+			margin-top: .3rem;
+			padding: .2rem;
+		}
+
+		a {
+			font-size: .8rem;
+		}
+	}
+
+	.c-bouton {
+		display: block;
+		padding: .2rem 1vw;
+		margin-top: 1rem;
+		border-radius: 10px;
+		background: var(--couleur-orange);
+		border: 2px solid var(--couleur-orange);
+		text-decoration: none;
+		text-align: center;
+		font-size: 1rem;
+		font-weight: 600;
+		&:hover {
+			background: var(--couleur-orange-hover);
+		}
+	}
+}
+
+@media screen and (max-width:1080px) {
+
+	.connexion-inscirption-formulaire {
+		width: 70%;
+	}
+}
+
+@media screen and (max-width:762px) and (orientation:portrait) {
+
+	.connexion-inscirption-formulaire {
+		width: 95%;
+	}
+}
