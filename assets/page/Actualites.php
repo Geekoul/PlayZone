@@ -48,6 +48,7 @@ $articles = $articleModel->getLastArticlesPaged(50, 0);
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
 
+      // Ajout des nouvelles <section> à la liste
       const html = await res.text();
       if (!html.trim()) { // plus rien à charger
         btnEl.style.display = 'none';
