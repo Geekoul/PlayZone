@@ -4,11 +4,11 @@
 	</section>
 
 	<nav class="admin-nav">
-		<a href="/adminutilisateurs">Utilisateurs</a>
-		<a href="/adminarticles">Articles</a>
-		<a href="/adminblogs">Blogs</a>
-		<a href="/admincommentaires">Commentaires</a>
-		<a href="/admincontacts">Contacts</a>
+    <a href="?page=adminutilisateur">Utilisateurs</a>
+    <a href="?page=adminarticles">Articles</a>
+    <a href="?page=adminblogs">Blogs</a>
+    <a href="?page=admincommentaires">Commentaires</a>
+    <a href="?page=admincontacts">Contacts</a>
 	</nav>
 
 	<section id="admin-utilisateurs-liste">

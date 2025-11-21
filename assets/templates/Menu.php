@@ -30,7 +30,7 @@
             <?php if (!empty($_SESSION['user']['est_administrateur']) && $_SESSION['user']['est_administrateur'] == 1): ?>
                 <!-- 🛠️ Lien Admin visible uniquement pour les administrateurs -->
                 <a href="/ajouterunarticle">Ajouter un Article</a>
-                <a href="/adminutilisateurs">🛠️ Admin</a>
+                <a href="?page=adminutilisateur">🛠️ Admin</a>
             <?php endif; ?>
 
             <!-- 🚪 Lien Déconnexion -->

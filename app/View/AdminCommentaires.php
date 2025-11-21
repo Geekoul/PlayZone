@@ -3,13 +3,13 @@
 		<h1>ADMIN - COMMENTAIRES</h1>
 	</section>
 
-  <nav class="admin-nav">
-    <a href="/adminutilisateurs">Utilisateurs</a>
-    <a href="/adminarticles">Articles</a>
-    <a href="/adminblogs">Blogs</a>
-    <a href="/admincommentaires" class="active">Commentaires</a>
-    <a href="/admincontacts">Contacts</a>
-  </nav>
+	<nav class="admin-nav">
+    <a href="?page=adminutilisateur">Utilisateurs</a>
+    <a href="?page=adminarticles">Articles</a>
+    <a href="?page=adminblogs">Blogs</a>
+    <a href="?page=admincommentaires">Commentaires</a>
+    <a href="?page=admincontacts">Contacts</a>
+	</nav>
 
   <section id="admin-commentaires-liste" class="box-bg">
     <?php if (empty($comments)): ?>
