@@ -2,10 +2,18 @@
 namespace App\Controller;
 
 use App\Model\CommentaireModel;
+use PDO;
 
 class CommentaireController
 {
-    public function __construct(private CommentaireModel $model) {}
+    private CommentaireModel $model;
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+        $this->model = new CommentaireModel($pdo);
+    }
 
     /** Ajout d’un commentaire : POST ?page=commentaire&step=ajouter */
     public function add(array $post): void
@@ -123,5 +131,28 @@ class CommentaireController
         }
 
         header('Location: /admincommentaires'); exit;
+    }
+
+    /**
+     * Gère l'affichage de la page admin (GET) ou les actions admin (POST)
+     * Retourne les données nécessaires pour la vue ou null si redirection
+     */
+    public function handleAdmin(): ?array
+    {
+        // Sécurité admin
+        if (empty($_SESSION['user']['est_administrateur'])) {
+            http_response_code(403);
+            echo "<main class='box-bg'><h1>Accès refusé</h1></main>";
+            return null;
+        }
+
+        // POST : actions admin (exécute le modèle)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            $this->adminUpdate($_POST);
+            return null; // adminUpdate() fait déjà la redirection
+        }
+
+        // GET : préparer les données pour la vue
+        return ['comments' => $this->model->getAllForAdmin()];
     }
 }

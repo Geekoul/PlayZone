@@ -1,1 +1,0 @@
-{"version":1,"defects":[],"times":{"Tests\\Unit\\ArticleModelTest::test_slugExists_returns_true_when_row_found":0.018,"Tests\\Unit\\ArticleModelTest::test_slugExists_returns_false_when_no_row":0}}

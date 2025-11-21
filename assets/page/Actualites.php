@@ -27,56 +27,56 @@ $articles = $articleModel->getLastArticlesPaged(50, 0);
 
 <?php if (!empty($articles)): ?>
 <script>
-(function() {
-  const listEl = document.getElementById('actualites-list');
-  const btnEl  = document.querySelector('#container-bouton-voir-plus .bouton-voir-plus');
-  if (!listEl || !btnEl) return;
+  (function() {
+    const listEl = document.getElementById('actualites-list');
+    const btnEl  = document.querySelector('#container-bouton-voir-plus .bouton-voir-plus');
+    if (!listEl || !btnEl) return;
 
-  let offset = <?= count($articles) ?>; // 50 au départ
-  const step = 10;
-  let loading = false;
+    let offset = <?= count($articles) ?>; // 50 au départ
+    const step = 10;
+    let loading = false;
 
-  async function loadMore() {
-    if (loading) return;
-    loading = true;
-    btnEl.style.pointerEvents = 'none';
-    btnEl.textContent = 'Chargement...';
+    async function loadMore() {
+      if (loading) return;
+      loading = true;
+      btnEl.style.pointerEvents = 'none';
+      btnEl.textContent = 'Chargement...';
 
-    try {
-      const res = await fetch(`/actualites/load?offset=${offset}&limit=${step}`, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      try {
+        const res = await fetch(`/actualites/load?offset=${offset}&limit=${step}`, {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
 
-      const html = await res.text();
-      if (!html.trim()) { // plus rien à charger
-        btnEl.style.display = 'none';
-        return;
+        const html = await res.text();
+        if (!html.trim()) { // plus rien à charger
+          btnEl.style.display = 'none';
+          return;
+        }
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+
+        const newItems = temp.children; // chaque enfant = un <section ...> de la liste
+        Array.from(newItems).forEach(el => listEl.appendChild(el));
+        offset += newItems.length;
+
+        if (newItems.length < step) { // dernière tranche
+          btnEl.style.display = 'none';
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        loading = false;
+        btnEl.style.pointerEvents = '';
+        btnEl.textContent = 'Voir plus...';
       }
-      const temp = document.createElement('div');
-      temp.innerHTML = html;
-
-      const newItems = temp.children; // chaque enfant = un <section ...> de la liste
-      Array.from(newItems).forEach(el => listEl.appendChild(el));
-      offset += newItems.length;
-
-      if (newItems.length < step) { // dernière tranche
-        btnEl.style.display = 'none';
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      loading = false;
-      btnEl.style.pointerEvents = '';
-      btnEl.textContent = 'Voir plus...';
     }
-  }
 
-  const onClick = () => loadMore();
-  btnEl.addEventListener('click', onClick);
-  btnEl.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); }
-  });
-})();
+    const onClick = () => loadMore();
+    btnEl.addEventListener('click', onClick);
+    btnEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); }
+    });
+  })();
 </script>
 <?php endif; ?>

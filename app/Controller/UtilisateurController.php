@@ -2,11 +2,20 @@
 namespace App\Controller;
 
 use App\Model\UtilisateurModel;
+use App\Model\BlogModel;
 use App\Helpers\ImageUtilisateur;
+use PDO;
 
 class UtilisateurController
 {
-    public function __construct(private UtilisateurModel $model) {}
+    private UtilisateurModel $model;
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+        $this->model = new UtilisateurModel($pdo);
+    }
 
     /** Inscription */
     public function register(array $post): void
@@ -301,6 +310,105 @@ class UtilisateurController
 
         $this->flash("Utilisateur #$id mis à jour.", 'success');
         $this->redirect('/adminutilisateurs');
+    }
+
+    /**
+     * Gère la connexion/inscription (POST) ou prépare l'affichage (GET)
+     */
+    public function handleConnexion(string $step): void
+    {
+        // GET : déconnexion ?page=connexion&step=exit
+        if ($step === 'exit') {
+            $this->logout(); // redirige vers /accueil
+            return;
+        }
+
+        // POST : login ou register (exécute le modèle)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            if (isset($_POST['pseudo'])) {
+                // Inscription
+                $this->register($_POST);
+            } else {
+                // Connexion
+                $this->login($_POST);
+            }
+            return; // register() et login() font déjà la redirection
+        }
+
+        // Sinon, rien à faire ici, la vue sera incluse par index.php
+    }
+
+    /**
+     * Gère les paramètres utilisateur (POST) ou prépare l'affichage (GET)
+     */
+    public function handleParametres(): void
+    {
+        // Accès interdit si non connecté
+        if (empty($_SESSION['user'])) {
+            header('Location: /connexion');
+            exit;
+        }
+
+        // POST : traitement des paramètres (exécute le modèle)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            // 1) AJAX: vérif ancien mot de passe AVANT soumission
+            $step = $_GET['step'] ?? '';
+            if ($step === 'check-mdp') {
+                $this->ajaxCheckPassword($_POST); // renvoie du JSON puis exit
+                return;
+            }
+            // 2) Formulaire paramètres (pseudo, mail, mot de passe, avatar...)
+            $this->updateParams($_POST, $_FILES);
+            // updateParams() ne redirige pas toujours, donc on redirige ici
+            header('Location: /parametres');
+            exit;
+        }
+
+        // Sinon, rien à faire ici, la vue sera incluse par index.php
+    }
+
+    /**
+     * Gère l'affichage de la page admin (GET) ou les actions admin (POST)
+     * Retourne les données nécessaires pour la vue ou null si redirection
+     */
+    public function handleAdmin(): ?array
+    {
+        // Sécurité admin
+        if (empty($_SESSION['user']['est_administrateur'])) {
+            http_response_code(403);
+            echo "<main class='box-bg'><h1>Accès refusé</h1></main>";
+            return null;
+        }
+
+        // POST : mise à jour/suppression utilisateur (exécute le modèle)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            $this->adminUpdate($_POST);
+            return null; // adminUpdate() fait déjà la redirection
+        }
+
+        // GET : préparer les données pour la vue
+        return ['users' => $this->model->getAll()];
+    }
+
+    /**
+     * Gère l'affichage du profil utilisateur
+     * Retourne les données nécessaires pour la vue
+     */
+    public function handleProfilUtilisateur(): array
+    {
+        $blogModel = new BlogModel($this->pdo);
+
+        return [
+            'meta' => [
+                'title' => 'Profil | PlayZone',
+                'description' => 'Page de profil de l\'utilisateur.'
+            ],
+            'view' => '/app/View/ProfilUtilisateur.php',
+            'data' => [
+                'userModel' => $this->model,
+                'blogModel' => $blogModel
+            ]
+        ];
     }
 
 }

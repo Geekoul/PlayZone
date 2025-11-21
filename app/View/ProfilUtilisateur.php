@@ -48,19 +48,6 @@ $description = trim($description) === '' ? "Aucune description pour le moment." 
 
 // 6) Charger tous les blogs créés par cet utilisateur
 $blogs = $blogModel->getByUserId($id);
-if (isset($blogModel) && method_exists($blogModel, 'getByUserId')) {
-    $blogs = $blogModel->getByUserId($id);
-} else {
-    // fallback manuel si la méthode n'existe pas
-    $stmt = $pdo->prepare("
-        SELECT b.id, b.titre, b.slug, b.image_banniere, b.date_publication
-        FROM blog b
-        WHERE b.id_utilisateur = :uid
-        ORDER BY b.date_publication DESC
-    ");
-    $stmt->execute([':uid' => $id]);
-    $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-}
 ?>
 
 

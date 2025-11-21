@@ -2,11 +2,22 @@
 namespace App\Controller;
 
 use App\Model\BlogModel;
+use App\Model\ArticleModel;
+use App\Model\CommentaireModel;
+use App\Model\UtilisateurModel;
 use App\Helpers\EditeurHelper;
+use PDO;
 
 class BlogController
 {
-    public function __construct(private BlogModel $model) {}
+    private BlogModel $model;
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+        $this->model = new BlogModel($pdo);
+    }
 
     /** Soumission du formulaire "Ajouter un blog" — route: ?page=ajouterunblog (POST) */
     public function submit(array $post, array $files): void
@@ -155,6 +166,99 @@ class BlogController
         }
 
         header('Location: /adminblogs'); exit;
+    }
+
+    /**
+     * Gère la soumission du formulaire (POST) ou prépare l'affichage (GET)
+     */
+    public function handleAddBlog(): void
+    {
+        // Si POST, traiter le formulaire (exécute le modèle)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            $this->submit($_POST, $_FILES);
+            return; // submit() fait déjà la redirection
+        }
+
+        // Sinon, rien à faire ici, la vue sera incluse par index.php
+    }
+
+    /**
+     * Gère l'affichage de la page admin (GET) ou les actions admin (POST)
+     * Retourne les données nécessaires pour la vue ou null si redirection
+     */
+    public function handleAdmin(): ?array
+    {
+        // Sécurité admin
+        if (empty($_SESSION['user']['est_administrateur'])) {
+            http_response_code(403);
+            echo "<main class='box-bg'><h1>Accès refusé</h1></main>";
+            return null;
+        }
+
+        // Si POST, traiter les actions admin (exécute le modèle)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            $this->adminUpdate($_POST);
+            return null; // adminUpdate() fait déjà la redirection
+        }
+
+        // Sinon, préparer les données pour la vue
+        return ['blogs' => $this->model->getAllForAdmin()];
+    }
+
+    /**
+     * Gère la page des blogs
+     * Retourne les données nécessaires pour la vue ou gère l'AJAX
+     */
+    public function handleBlogs(string $step): ?array
+    {
+        // AJAX : /blogs?step=load&offset=..&limit=..
+        if ($step === 'load') {
+            header('Content-Type: text/html; charset=utf-8');
+
+            $limit  = max(1, min(50, (int)($_GET['limit']  ?? 10))); // sécurité
+            $offset = max(0,          (int)($_GET['offset'] ?? 0));
+
+            $blogs = $this->model->getLastBlogsPaged($limit, $offset);
+
+            require __DIR__ . '/../../assets/templates/ListeBlog.php';
+            exit;
+        }
+
+        return [
+            'meta' => [
+                'title' => 'Blogs | PlayZone',
+                'description' => 'Lisez les articles et opinions des membres de la communauté.'
+            ],
+            'view' => '/assets/page/Blogs.php',
+            'data' => [
+                'blogModel' => $this->model
+            ]
+        ];
+    }
+
+    /**
+     * Gère l'affichage d'un blog
+     * Retourne les données nécessaires pour la vue
+     */
+    public function handleBlogView(): array
+    {
+        $articleModel = new ArticleModel($this->pdo);
+        $commentModel = new CommentaireModel($this->pdo);
+        $userModel = new UtilisateurModel($this->pdo);
+
+        return [
+            'meta' => [
+                'title' => 'Blog | PlayZone',
+                'description' => 'Page du contenu du blog.'
+            ],
+            'view' => '/app/View/BlogView.php',
+            'data' => [
+                'articleModel' => $articleModel,
+                'blogModel' => $this->model,
+                'commentModel' => $commentModel,
+                'userModel' => $userModel
+            ]
+        ];
     }
 
 }
