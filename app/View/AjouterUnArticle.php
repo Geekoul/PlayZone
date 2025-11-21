@@ -8,7 +8,8 @@
 	<section id="ajouter-un-article" class="box-bg-formulaire formulaire">
 		<form id="articleForm" action="/ajouterunarticle" method="post" enctype="multipart/form-data">
 			<label for="titreArticle">Titre de l’article :</label>
-			<input type="text" id="titreArticle" name="titreArticle" value="<?= isset($article) ? htmlspecialchars($article['article_titre'], ENT_QUOTES) : '' ?>" required />
+			<input type="text" id="titreArticle" name="titreArticle" value="
+			<?= isset($article) ? htmlspecialchars($article['article_titre'], ENT_QUOTES) : '' ?>" required />
 
 			<label for="banniereArticle">Image principale de l’article :</label>
 			<input type="file" id="banniereArticle" name="banniereArticle" accept="image/png, image/jpeg, image/webp" required/>

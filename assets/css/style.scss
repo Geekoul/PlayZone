@@ -1,5 +1,7 @@
 @import "admin-bouton", "admin-table", "article-contenu", "article-intro", "blog-contenu", "blog-intro", "bouton", "box", "carte-utilisateur", "commentaire", "dernieres-actualites-liste", "editeur-texte", "footer", "form-connexion-inscription", "formulaire", "i-actualites-globales", "i-liste-des-blogs", "liste-des-blogs", "nav", "pu-intro", "pu-description", "pu-liste-des-blogs", "pu-utilisateur-information", "main-page", "titre-page", "voir-plus", "webkit-limite-paragraphe";
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Voces&display=swap');
+
 :root {
   --background-site: #1a2131;
   --background-noir-transparent: rgba(13, 14, 21, 0.451);
@@ -66,7 +68,6 @@ pre {
   overflow-wrap: break-word;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Voces&display=swap');
 
 @media screen and (max-width:1080px) {
   pre {

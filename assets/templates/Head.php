@@ -3,7 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="<?= htmlspecialchars($meta['description'] ?? 'L’espace dédié à l’actualité et aux discussions sur le jeu vidéo.') ?>">
+	<meta name="description" content="<?= htmlspecialchars($meta['description'] ?? 
+	'L’espace dédié à l’actualité et aux discussions sur le jeu vidéo.') ?>">
 	<title><?= htmlspecialchars($meta['title'] ?? 'PlayZone') ?></title>
 	<link rel="stylesheet" href="/assets/css/style.css">
 	<link canonical href="https://www.playzone.com/">

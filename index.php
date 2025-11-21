@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Démarre ou reprend la session afin de pouvoir utiliser $_SESSION.
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Database;
@@ -164,15 +164,13 @@ if ($page === 'actualites' && $step === 'load') {
 /* ============================================================
    4) Routing GET -> choix de la vue + metas
    ============================================================ */
-
-// $meta (title, description) pour Head.php
 $meta = [
     'title' => 'PlayZone',
     'description' => 'L’espace dédié à l’actualité et aux discussions sur le jeu vidéo.'
 ];
-// $view (chemin du fichier de vue à inclure)
+// $meta (title, description) pour Head.php
 $view = '/assets/page/404error.php'; // valeur par défaut (sécurité)
-
+// $view (chemin du fichier de vue à inclure)
 
 switch ($page) {
     // ------------------
@@ -325,13 +323,13 @@ switch ($page) {
         break;
 
     case 'admincontacts':
-        $meta['title'] = 'Administration | PlayZone';
-        $meta['description'] = 'Gestion des messages de contact.';
-        if (empty($_SESSION['user']['est_administrateur'])) {
-            http_response_code(403);
-            echo "<main class='box-bg'><h1>Accès refusé</h1></main>";
-            break;
-        }
+    $meta['title'] = 'Administration | PlayZone';
+    $meta['description'] = 'Gestion des messages de contact.';
+    if (empty($_SESSION['user']['est_administrateur'])) {
+        http_response_code(403);
+        echo "<main class='box-bg'><h1>Accès refusé</h1></main>";
+        break;
+    }
     $contacts = $contactsModel->getAllForAdmin();
     $view = '/app/View/AdminContacts.php';
     break;
@@ -352,7 +350,9 @@ switch ($page) {
 // Head/Menu ont besoin de $meta et $page
 require __DIR__ . '/assets/templates/Head.php';
 require __DIR__ . '/assets/templates/Menu.php';
+
 // Vue principale
 require __DIR__ . $view;
+
 // Footer
 require __DIR__ . '/assets/templates/Footer.php';
