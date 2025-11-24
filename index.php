@@ -1,4 +1,5 @@
 <?php
+// 1) INITIALISATION DE BASE DU FRONT CONTROLLER
 session_start();
 
 require_once __DIR__ . '/vendor/autoload.php';

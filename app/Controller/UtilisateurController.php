@@ -69,21 +69,27 @@ class UtilisateurController
     /** Connexion */
     public function login(array $post): void
     {
+        // CSRF : assertCsrf($post) comme pour l’inscription.
         $this->assertCsrf($post);
 
         $email = strtolower(trim((string)($post['email'] ?? '')));
         $mdp   = (string)($post['mot_de_passe'] ?? '');
-
+        // 2. Valide le format de l’email.
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->flash('Email invalide.', 'error');
             $this->redirect('/connexion');
         }
+
+        //3. Recherche l’utilisateur dans la base.
         $user = $this->model->getByEmail($email);
+        
+        //4. Vérifie le mot de passe haché.
         if (!$user || !password_verify($mdp, $user['mot_de_passe'])) {
             $this->flash('Identifiants incorrects.', 'error');
             $this->redirect('/connexion');
         }
 
+        //5. Enregistre les données utilisateur.
         $_SESSION['user'] = [
             'id' => (int)$user['id'],
             'pseudo' => $user['pseudo'],

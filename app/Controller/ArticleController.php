@@ -82,7 +82,6 @@ class ArticleController
         }
 
         // 3) Contenu HTML :
-
         // Supprime les anciens wrappers <div class="ac-img"> autour des images dans le contenu
         $contenu = EditeurHelper::stripAcImgDiv($contenu);
         $savedImagePaths = [];

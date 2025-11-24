@@ -94,6 +94,5 @@ $__carte_user_href   = $authorLink;
       <?= $contenuHtml /* HTML volontairement brut, déjà filtré à la création */ ?>
     </section>
   </article>
-
   <?php require_once("assets/templates/Commentaire.php"); ?>
 </main>
