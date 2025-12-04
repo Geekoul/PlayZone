@@ -70,9 +70,6 @@ class ArticleModel
     {
             $q = $this->pdo->prepare("SELECT 1 FROM article WHERE article_slug = ? LIMIT 1");
             $q->execute([$slug]);
-            // fetchColumn() récupère la première colonne de la première ligne.
-            // Si une ligne existe, fetchColumn() renverra "1", sinon false.
-            // Le cast (bool) transforme cela en true (slug existant) ou false (slug libre).
             return (bool)$q->fetchColumn();
     }
 

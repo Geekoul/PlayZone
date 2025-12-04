@@ -20,11 +20,9 @@ class ArticleController
         $this->model = new ArticleModel($pdo);
     }
 
-    /**
-     * Soumission du formulaire "Ajouter un article"
-     */
     public function submit(array $post, array $files): void
     {
+        // 1. Récupère et nettoie les entrées du formulaire
         $titre   = trim((string)($post['titreArticle'] ?? ''));
         $contenu = (string)($post['contenuArticle'] ?? '');
 
@@ -36,13 +34,9 @@ class ArticleController
 
         $userId = (int)($_SESSION['user']['id'] ?? 0);
         $baseSlug = $this->slugify($titre);
-        // Initialise le slug courant avec le slug de base
         $slug = $baseSlug;
-        // Compteur pour suffixer le slug en cas de doublon (ex: -2, -3, ...)
         $i = 2;
-        // Tant qu’un article avec ce slug existe déjà en BDD...
         while ($this->model->slugExists($slug)) {
-            // Ajoute un suffixe numérique pour obtenir un slug unique
             $slug = $baseSlug . '-' . $i++;
         }
 
@@ -51,116 +45,78 @@ class ArticleController
         $uploadDirWeb  = "/assets/images/imageActualites/{$articleId}";
         $uploadDirDisk = rtrim($_SERVER['DOCUMENT_ROOT'] ?? dirname(__DIR__, 3), '/') . $uploadDirWeb;
 
-        // Si le dossier n’existe pas et qu’on n’arrive pas à le créer...
         if (!is_dir($uploadDirDisk) && !mkdir($uploadDirDisk, 0775, true)) {
             $_SESSION['flash'][] = ['m' => "Impossible de créer le dossier de l’article.", 't' => 'error'];
-            // Redirige vers la page de l’article (même si le dossier n’existe pas, on évite de rester sur le POST)
             header('Location: /article/' . rawurlencode($slug));
             exit;
         }
 
         // 2) Bannière principale (optionnelle)
-
-        // Vérifie si un fichier bannière a été uploadé et qu’il n’y a pas d’erreur d’upload
         if (!empty($files['banniereArticle']['tmp_name']) && ($files['banniereArticle']['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
-            // Chemin temporaire du fichier uploadé
             $tmp = $files['banniereArticle']['tmp_name'];
-            // Chemin disque final de la bannière en .webp
             $bannerPathDisk = $uploadDirDisk . '/banner.webp';
 
-            // Déplace le fichier uploadé dans le dossier définitif
             if (!move_uploaded_file($tmp, $bannerPathDisk)) {
-                // Message d’erreur si le déplacement échoue
                 $_SESSION['flash'][] = ['m' => "Échec de l’enregistrement de la bannière.", 't' => 'error'];
-                // Redirige vers la page de l’article
                 header('Location: /article/' . rawurlencode($slug));
                 exit;
             }
 
-            // Met à jour en BDD le chemin web de la bannière associée à l’article
             $this->model->updateBanner($articleId, $uploadDirWeb . '/banner.webp');
         }
 
         // 3) Contenu HTML :
-        // Supprime les anciens wrappers <div class="ac-img"> autour des images dans le contenu
         $contenu = EditeurHelper::stripAcImgDiv($contenu);
         $savedImagePaths = [];
-        // Première passe : trouver toutes les balises <img> avec src en Data URI (base64)
         $processedHtml = preg_replace_callback(
             '#<img\s+[^>]*src=["\'](data:image/[^"\']+)["\']([^>]*)>#i',
             function(array $m) use ($uploadDirDisk, $uploadDirWeb, &$savedImagePaths) {
-                // $m[1] = Data URI complète, ex: data:image/png;base64,xxx...
                 $dataUri = $m[1];
-                // $m[2] = les autres attributs après src (alt, class, etc.)
                 $attrs   = $m[2] ?? '';
 
-                // Récupère l’attribut alt s’il est présent
                 $alt = '';
                 if (preg_match('#\salt=["\']([^"\']*)["\']#i', $attrs, $a)) {
                     $alt = trim($a[1]); // Nettoie la valeur de alt
                 }
-                // Si aucun alt, on met une valeur par défaut
                 if ($alt === '') $alt = 'image';
 
-                // Découpe la Data URI en deux parties "meta" et "base64"
                 $parts = explode(',', $dataUri, 2);
-                // Si on n’a pas exactement 2 parties, ce n’est pas valide → on supprime l’image
                 if (count($parts) !== 2) { return ''; }
-                // Partie base64 (après la virgule)
                 $b64 = $parts[1];
-                // Décode la base64 en binaire
                 $bin = base64_decode($b64, true);
-                // Si le décodage échoue, on supprime l’image
                 if ($bin === false) { return ''; }
 
-                // Nettoie le alt pour en faire un nom de fichier safe (remplace les caractères non autorisés)
                 $safe = preg_replace('/[^A-Za-z0-9_\-]/', '_', $alt);
-                // Si le résultat est vide, on met "image"
                 if ($safe === '') $safe = 'image';
-
-                // Ajoute un hash basé sur la chaîne base64 pour éviter les collisions simples
                 $filename = $safe . '_' . substr(sha1($b64), 0, 8) . '.webp';
-
-                // Écrit le fichier image décodé sur le disque dans le dossier de l’article
                 file_put_contents($uploadDirDisk . '/' . $filename, $bin);
-                // Chemin web (URL relative) de l’image enregistrée
+
                 $webPath = $uploadDirWeb . '/' . $filename;
-                // Ajoute ce chemin à la liste des images sauvegardées
                 $savedImagePaths[] = $webPath;
 
-                // Retourne une balise <img> propre avec src vers le fichier et alt échappé
                 return '<img src="' . htmlspecialchars($webPath, ENT_QUOTES) . '" alt="' . htmlspecialchars($alt, ENT_QUOTES) . '">';
             },
-            $contenu // Texte HTML d’origine à traiter
+            $contenu 
         );
 
-        // Deuxième passe : encapsuler les images consécutives dans un <div class="ac-img">
         $processedHtml = preg_replace_callback(
-            // Regex qui repère 2 ou plus balises <img> qui se suivent (avec espaces éventuels)
             '/(?:\s*(<img[^>]+>)){2,}/i',
             function ($matches) {
-                // $matches[0] contient tout le bloc de <img> consécutives
-                $imgs = trim($matches[0]); // Supprime espaces au début/fin
-                // Retourne ce bloc entouré par un <div class="ac-img"> pour mise en forme
+                $imgs = trim($matches[0]);
                 return "<div class=\"ac-img\">\n" . $imgs . "\n</div>";
             },
-            $processedHtml // HTML déjà traité à l’étape précédente
+            $processedHtml
         );
 
-        // Transforme la liste des chemins d’images en chaîne CSV séparée par des ;
         $csv = implode(';', array_unique($savedImagePaths));
 
         // 4) Sauvegarder contenu + csv images
-        // Met à jour l’article en BDD avec le contenu HTML final + la liste des images
         $this->model->updateContentImages($articleId, $processedHtml, $csv);
-
-        // Ajoute un message flash de succès
         $_SESSION['flash'][] = ['m' => 'Article publié !', 't' => 'success'];
-
-        // Redirige vers la page publique de l’article, basée sur le slug
         header('Location: /article/' . rawurlencode($slug));
-        exit; // Stoppe le script après la redirection
+        exit;
     }
+
 
     // Méthode privée pour transformer une chaîne en "slug" URL-friendly
     private function slugify(string $str): string 

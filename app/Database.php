@@ -12,20 +12,18 @@ class Database
     public function __construct()
     {
         // Paramètres de connexion à la base de données
-        $host = "mysql";          // Nom d’hôte (souvent "localhost" ou nom du service dans Docker)
-        $dbname = "bdd_playzone"; // Nom de la base
-        $charset = "utf8mb4";     // Encodage recommandé
-        $username = "root";       // Nom d'utilisateur MySQL
-        $password = "root";       // Mot de passe MySQL
+        $host = $_ENV['DB_HOST'];        
+        $dbname = $_ENV['DB_NAME']; 
+        $charset = $_ENV['DB_CHARSET'];     
+        $username = $_ENV['DB_USER'];     
+        $password = $_ENV['DB_PASSWORD'];
 
         try {
             // Création d’un nouvel objet PDO avec DSN + identifiants
             $this->connection = new PDO(
                 "mysql:host=$host;dbname=$dbname;charset=$charset", $username, $password,
                 [
-                    // Active le mode Exception pour faciliter le debug
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    // Définit le mode de récupération des données par défaut
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                 ]
             );

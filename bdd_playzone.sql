@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : mysql
--- Généré le : ven. 21 nov. 2025 à 14:49
+-- Généré le : jeu. 27 nov. 2025 à 14:08
 -- Version du serveur : 8.0.42
 -- Version de PHP : 8.2.27
 
@@ -31,11 +31,11 @@ CREATE TABLE `article` (
   `id` int UNSIGNED NOT NULL,
   `id_utilisateur` int UNSIGNED DEFAULT NULL,
   `id_commentaire_thread` int UNSIGNED DEFAULT NULL,
-  `article_titre` text COLLATE utf8mb4_general_ci NOT NULL,
-  `article_slug` varchar(190) COLLATE utf8mb4_general_ci NOT NULL,
-  `article_banniere_img` text COLLATE utf8mb4_general_ci,
-  `article_contenu` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `article_contenu_img` text COLLATE utf8mb4_general_ci,
+  `article_titre` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `article_slug` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `article_banniere_img` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `article_contenu` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `article_contenu_img` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `article_date_publication` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -58,11 +58,11 @@ CREATE TABLE `blog` (
   `id` int UNSIGNED NOT NULL,
   `id_utilisateur` int UNSIGNED DEFAULT NULL,
   `id_commentaire_thread` int UNSIGNED DEFAULT NULL,
-  `blog_titre` text COLLATE utf8mb4_general_ci NOT NULL,
+  `blog_titre` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `blog_slug` varchar(190) COLLATE utf8mb4_general_ci NOT NULL,
-  `blog_banniere_img` text COLLATE utf8mb4_general_ci,
-  `blog_contenu` longtext COLLATE utf8mb4_general_ci NOT NULL,
-  `blog_contenu_img` text COLLATE utf8mb4_general_ci,
+  `blog_banniere_img` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `blog_contenu` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `blog_contenu_img` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `blog_date_publication` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -145,8 +145,8 @@ INSERT INTO `commentaire_thread` (`id`, `thread_date_publication`) VALUES
 
 CREATE TABLE `contacts` (
   `id` int NOT NULL,
-  `email` varchar(190) NOT NULL,
-  `motif` varchar(190) NOT NULL,
+  `email` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `motif` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `message` text NOT NULL,
   `date_envoi` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -171,7 +171,7 @@ CREATE TABLE `utilisateur` (
   `mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `date_inscription` date NOT NULL DEFAULT (curdate()),
   `profil_description` text COLLATE utf8mb4_general_ci,
-  `chemin_logo` text COLLATE utf8mb4_general_ci,
+  `chemin_logo` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `est_administrateur` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
